@@ -67,6 +67,34 @@ $(function() {
        console.log( data );
    });
     console.log ("sent request to the server");
+    ///////////// Need to change URL? DELETE CALL
+    var deleteStb = function(){
+    $.ajax({'url': "/listofitems"
+    'type' : 'DELETE',
+    'success' : function(data){
+        console.log( data );
+    },
+    'error': function(jqXHR, data){
+        console.log( data );
+ 
+        console.log( '<div style="color:red;font-weight:bold;">' + 
+             'Failed to DELETE the settop box. See server logs for problem.</div>');
+    },
+    'dataType' : 'text'
+    });
+};
+    //////////////////////
+///////////// Need to change URL? CREATE CALL
+    $.post( "/listofitems", function( data ) {
+  $( ".result" ).html( data );
+});
+//////////////////////
+
+///////////// Need to change URL? UPDATE
+    $.post( "/listofitems", function( data ) {
+  $( ".result" ).html( data );
+});
+//////////////////////
 
     $("#inputtext").val("").focus();
     reload();
@@ -76,6 +104,7 @@ $(function() {
             $('#addbutton').click();
         }
     })
+
     $('#addbutton').on("click", function() {
 
         var text = $('#inputtext').val();
