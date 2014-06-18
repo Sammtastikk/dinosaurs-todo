@@ -3,8 +3,18 @@ var fs = require('fs');
 var app = express();
 var jf = require("jsonfile");
 
+// Generate random id
+function createGuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+  return v.toString(16);
+  });
+}
+
 console.log(__dirname)
 app.use(express.static(__dirname + '/client'));
+app.use(express.json());       // to support JSON-encoded bodies
+app.use(express.urlencoded()); // to support URL-encoded bodies
 
 app.get('/', function(req, res) {
     fs.readFile('index.html', function (err, data) {
@@ -64,29 +74,34 @@ app.delete('/item/:id', function (req,res) {
   }); 
 });
 
-app.create('/item/', function (req,res) {
+app.post('/items', function (req,res) {
+  console.log ("post is being called")
   fs.readFile('data.json', function(err, data) {
     if (err) throw err;
     var dataitems=JSON.parse (data.toString());
-    dataitems.push(req.params);
-    jf.writeFileSync(dataitems,'data.json');
+    var newItem = {title: req.body.title, completed: false, id: createGuid()}
+    newItem = toString(newItem);
+
+    dataitems.push(newItem);
+    jf.writeFileSync('data.json', dataitems);
     res.send(200);
   }); 
 });
- 
- app.update ('/items/:id', function (req, res){
+ /*
+ app.update ('/items/:id/:title', function (req, res){
   fs.readFile('data.json', function(err, data) {
     if (err) throw err;
     var dataitems=JSON.parse (data.toString());
     for (var i = 0; i < dataitems.length; i++) {
       if (dataitems[i].id === req.params.id) {
-        dataitems[i] = req.params;  
+        dataitems[i].id = req.params.id;  
       }
     };
     jf.writeFileSync(dataitems,"data.json"); 
     res.send(200);
   }); 
 });
+*/
 
 console.log("Starting to listen");
 
