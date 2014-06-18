@@ -66,10 +66,17 @@ $(function() {
     $.get( "/listofitems", function( data ) {
        console.log( data );
    });
+    $.get( "/listofitems/:id", function( data ) {
+       console.log( data );
+   });
     console.log ("sent request to the server");
+
+$.post( "/items", { title: "Eat ice cream" } );
+
+    /*
     ///////////// Need to change URL? DELETE CALL
     var deleteStb = function(){
-    $.ajax({'url': "/listofitems"
+    $.ajax({'url': "/listofitems/:id"
     'type' : 'DELETE',
     'success' : function(data){
         console.log( data );
@@ -82,19 +89,22 @@ $(function() {
     },
     'dataType' : 'text'
     });
-};
+};*/
     //////////////////////
 ///////////// Need to change URL? CREATE CALL
-    $.post( "/listofitems", function( data ) {
+    /*$.post( "/listofitems", function( data ) {
   $( ".result" ).html( data );
-});
+});*/
 //////////////////////
 
 ///////////// Need to change URL? UPDATE
-    $.post( "/listofitems", function( data ) {
+    /*$.post( "/listofitems/:id", function( data ) {
   $( ".result" ).html( data );
-});
+});*/
 //////////////////////
+
+///////////// Need to change URL? STORAGE
+
 
     $("#inputtext").val("").focus();
     reload();
