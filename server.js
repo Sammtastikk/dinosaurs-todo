@@ -22,6 +22,30 @@ app.get ('/test', function (req, res){
 	res.json (clay);
 });
 
+app.get ('/items', function (req, res){
+  fs.readFile('data.json', function (err, data) {
+    if (err) throw err;
+    var dataitems=JSON.parse (data.toString());
+    res.json (dataitems);
+  });
+
+
+});
+  
+app.get ('/items/:id', function (req, res){
+  fs.readFile('data.json', function (err, data) {
+    if (err) throw err;
+    var dataitems=JSON.parse (data.toString());
+    for (var i = 0; i < dataitems.length; i++) {
+      if (dataitems[i].id === req.params.id) {
+        res.json(dataitems[i]);
+        return  
+      }
+    }; 
+    res.send(404)
+  }); 
+});
+ 
 console.log("Starting to listen");
 
 var server = app.listen(3000, function() {

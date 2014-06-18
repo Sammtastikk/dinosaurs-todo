@@ -63,9 +63,8 @@ function reload() {
 
 
 $(function() {
-    $.get( "/test", function( data ) {
+    $.get( "/listofitems", function( data ) {
        console.log( data );
-       console.log (data.title);
    });
     console.log ("sent request to the server");
 
